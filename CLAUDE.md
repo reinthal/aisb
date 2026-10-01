@@ -190,13 +190,32 @@ Include these instructions when a section has code for participants to execute
 (replacing D with the day number and S with the section number). Do not add an empty setup to a
 prose-only section; instead state its discussion or written deliverable directly.
 
-```markdown
-Create a file named `dayD_answers.py` in the `D.S-section-name` directory. This will be your answer file for this section.
+````markdown
+Create your answer file for this section by running this command from the workspace root. It
+writes the standard boilerplate into `D.S-section-name/dayD_answers.py`; it is safe to
+re-run and will not overwrite an existing file:
 
-If you see a code snippet here in the instruction file, copy-paste it into your answer file. Keep the `# %%` line to make it a Python code cell.
+```bash
+test -f D.S-section-name/dayD_answers.py || tee D.S-section-name/dayD_answers.py > /dev/null <<'EOF'
+# %%
+import sys
+from pathlib import Path
 
-**Start by pasting the code below in your dayD_answers.py file.**
+# Make the workspace root importable (so `from aisb_utils import report` works),
+# regardless of how deeply this file is nested.
+_root = next(p for p in Path(__file__).resolve().parents if (p / "aisb_utils").is_dir())
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+from aisb_utils import report
+EOF
 ```
+
+If you see a code snippet here in the instruction file, copy-paste it into your answer file. Keep the `# %%` line to make it a Python code cell. The boilerplate written by the command above is already in your answer file — skip it when it reappears in a code block.
+````
+
+The `test -f … ||` guard is required: without it, re-running the command (or a participant
+pasting it a second time) would truncate an answer file that already contains work.
 
 ### Canonical `sys.path` / import boilerplate
 

@@ -85,10 +85,31 @@ Test which waveform features distinguish different inputs to the same model.
 
 ## Setup
 
-Create a standalone file named **`section1_execute.py`** in the
-`6.1-side-channel-monitoring` directory. Build it up as you complete the
-exercises, copying the Python snippets into it and implementing the missing
-functions. Keep the `# %%` markers as section boundaries.
+Create a standalone file named **`section1_execute.py`** by running this command from the
+workspace root. It writes the standard boilerplate into
+`6.1-side-channel-monitoring/section1_execute.py`; it is safe to re-run and will not
+overwrite an existing file:
+
+```bash
+test -f 6.1-side-channel-monitoring/section1_execute.py || tee 6.1-side-channel-monitoring/section1_execute.py > /dev/null <<'EOF'
+# %%
+import sys
+from pathlib import Path
+
+# Make the workspace root importable (so `from aisb_utils import report` works),
+# regardless of how deeply this file is nested.
+_root = next(p for p in Path(__file__).resolve().parents if (p / "aisb_utils").is_dir())
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+from aisb_utils import report
+EOF
+```
+
+Build the file up as you complete the exercises, copying the Python snippets into it and
+implementing the missing functions. Keep the `# %%` markers as section boundaries. The
+boilerplate written by the command above is already in your file — skip it when it reappears
+in a code block.
 
 Submit this file to **Slurm** whenever you want to run an experiment. Each job
 starts a fresh Python process, so the script must include its imports, helper

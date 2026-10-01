@@ -57,8 +57,28 @@ privilege escalation. It does not require vulnerable production hardware.
 Today's exercises run on the remote machine. If you are not connected yet, follow
 the [Day 0 setup guide](../day0-setup/README.md#connecting-to-your-runpod-machine) first.
 
-Create `day7_answers.py` in `7.4-gpu-rowhammer/`. Copy each code cell into
-that file and run `python 7.4-gpu-rowhammer/smoke_test.py` before beginning.
+Create your answer file by running this command from the workspace root. It writes the
+standard boilerplate into `7.4-gpu-rowhammer/day7_answers.py`; it is safe to re-run and will
+not overwrite an existing file:
+
+```bash
+test -f 7.4-gpu-rowhammer/day7_answers.py || tee 7.4-gpu-rowhammer/day7_answers.py > /dev/null <<'EOF'
+# %%
+import sys
+from pathlib import Path
+
+# Make the workspace root importable (so `from aisb_utils import report` works),
+# regardless of how deeply this file is nested.
+_root = next(p for p in Path(__file__).resolve().parents if (p / "aisb_utils").is_dir())
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+from aisb_utils import report
+EOF
+```
+
+Copy each code cell into that file and run `python 7.4-gpu-rowhammer/smoke_test.py` before
+beginning.
 
 
 ## GPUBreach: RowHammer to root

@@ -32,23 +32,47 @@ Practice the git workflow you'll use throughout the bootcamp. This will help you
 > **Difficulty**: 1/5
 > **Importance**: 5/5
 
-Create a file named `day0_answers.py` in the `day0-setup` directory. This will be your answer file for this exercise.
+Create your answer file for this exercise by running this command from the workspace root. It
+writes the standard boilerplate into `day0-setup/day0_answers.py`; it is safe to re-run and
+will not overwrite an existing file:
+
+```bash
+test -f day0-setup/day0_answers.py || tee day0-setup/day0_answers.py > /dev/null <<'EOF'
+# %%
+import sys
+from pathlib import Path
+
+# Make the workspace root importable (so `from aisb_utils import report` works),
+# regardless of how deeply this file is nested.
+_root = next(p for p in Path(__file__).resolve().parents if (p / "aisb_utils").is_dir())
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+from aisb_utils import report
+EOF
+```
 
 ### Common code
 If you see a code snippet in the instruction file, copy-paste it into your answer file.
 
-Keep the `# %%` line in the code snippet to make it a Python code cell.
+Keep the `# %%` line in the code snippet to make it a Python code cell. The boilerplate
+written by the command above is already in your answer file — skip it when it reappears in a
+code block.
 
 
 ```python
 
 # %%
-
-# Ensure the root directory is in the path for imports
 import os
 import sys
+from pathlib import Path
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+# Make the workspace root importable (so `from aisb_utils import report` works),
+# regardless of how deeply this file is nested.
+_root = next(p for p in Path(__file__).resolve().parents if (p / "aisb_utils").is_dir())
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
 from aisb_utils import report
 
 # Common imports

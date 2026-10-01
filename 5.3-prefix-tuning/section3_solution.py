@@ -33,13 +33,29 @@ from aisb_utils import report
 """
 ## Setup
 
-Create a file named `day5_answers.py` in the `5.3-prefix-tuning` directory. This will be your answer file for this
-section.
+Create your answer file for this section by running this command from the workspace root. It
+writes the standard boilerplate into `5.3-prefix-tuning/day5_answers.py`; it is safe to
+re-run and will not overwrite an existing file:
+
+```bash
+test -f 5.3-prefix-tuning/day5_answers.py || tee 5.3-prefix-tuning/day5_answers.py > /dev/null <<'EOF'
+# %%
+import sys
+from pathlib import Path
+
+# Make the workspace root importable (so `from aisb_utils import report` works),
+# regardless of how deeply this file is nested.
+_root = next(p for p in Path(__file__).resolve().parents if (p / "aisb_utils").is_dir())
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+from aisb_utils import report
+EOF
+```
 
 If you see a code snippet here in the instruction file, copy-paste it into your answer file. Keep the `# %%` line to
-make it a Python code cell.
-
-**Start by pasting the code below in your day5_answers.py file.**
+make it a Python code cell. The boilerplate written by the command above is already in your answer file — skip it when
+it reappears in a code block.
 """
 
 # %%

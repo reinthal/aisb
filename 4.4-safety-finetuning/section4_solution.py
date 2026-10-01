@@ -75,11 +75,29 @@ pip install peft vllm
 
 ### Setup
 
-If you have not already, create a file named `day4_answers.py` in the `4.4-safety-finetuning`
-directory and use it as your answer file for this optional section.
+Create your answer file for this optional section by running this command from the workspace
+root. It writes the standard boilerplate into `4.4-safety-finetuning/day4_answers.py`; it is
+safe to re-run and will not overwrite an existing file:
+
+```bash
+test -f 4.4-safety-finetuning/day4_answers.py || tee 4.4-safety-finetuning/day4_answers.py > /dev/null <<'EOF'
+# %%
+import sys
+from pathlib import Path
+
+# Make the workspace root importable (so `from aisb_utils import report` works),
+# regardless of how deeply this file is nested.
+_root = next(p for p in Path(__file__).resolve().parents if (p / "aisb_utils").is_dir())
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+from aisb_utils import report
+EOF
+```
 
 If you see a code snippet here in the instruction file, copy-paste it into your answer file.
-Keep the `# %%` line to make it a Python code cell.
+Keep the `# %%` line to make it a Python code cell. The boilerplate written by the command
+above is already in your answer file — skip it when it reappears in a code block.
 
 **Paste the boilerplate below into your `day4_answers.py` file.**
 """

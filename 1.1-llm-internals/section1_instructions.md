@@ -52,11 +52,29 @@ First, set up credentials for the [OpenRouter API](https://openrouter.ai/docs/qu
 
 1. Copy `.env.example` in the project root to `.env`, then add the OpenRouter
    API key. The same key is used in later API-based sections.
-2. Create `day1_answers.py` in the `1.1-llm-internals` directory. This will be
-   your answer file for today.
+2. Create your answer file for today by running the command below from the workspace root. It
+   writes the standard boilerplate into `1.1-llm-internals/day1_answers.py`; it is safe to
+   re-run and will not overwrite an existing file.
+
+```bash
+test -f 1.1-llm-internals/day1_answers.py || tee 1.1-llm-internals/day1_answers.py > /dev/null <<'EOF'
+# %%
+import sys
+from pathlib import Path
+
+# Make the workspace root importable (so `from aisb_utils import report` works),
+# regardless of how deeply this file is nested.
+_root = next(p for p in Path(__file__).resolve().parents if (p / "aisb_utils").is_dir())
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+from aisb_utils import report
+EOF
+```
 
 If you see a code snippet here in the instruction file, copy-paste it into your answer file.
-Keep the `# %%` line to make it a Python code cell.
+Keep the `# %%` line to make it a Python code cell. The boilerplate written by the command
+above is already in your answer file — skip it when it reappears in a code block.
 
 **Paste the code below in your day1_answers.py file.**
 

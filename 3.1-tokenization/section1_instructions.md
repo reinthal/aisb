@@ -90,7 +90,27 @@ PyTorch build; an unpinned install pulls a `transformers` release that cannot
 load against them, and the resulting error names a symbol unrelated to the real
 cause.
 
-Once the remote workspace is open, create file `3.1-tokenization/day3_answers.py` and continue with Section 1 as usual.
+Once the remote workspace is open, create your answer file by running this command from the
+workspace root. It writes the standard boilerplate into `3.1-tokenization/day3_answers.py`;
+it is safe to re-run and will not overwrite an existing file:
+
+```bash
+test -f 3.1-tokenization/day3_answers.py || tee 3.1-tokenization/day3_answers.py > /dev/null <<'EOF'
+# %%
+import sys
+from pathlib import Path
+
+# Make the workspace root importable (so `from aisb_utils import report` works),
+# regardless of how deeply this file is nested.
+_root = next(p for p in Path(__file__).resolve().parents if (p / "aisb_utils").is_dir())
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
+
+from aisb_utils import report
+EOF
+```
+
+Then continue with Section 1 as usual.
 
 
 ## Tokenization & prompt construction
